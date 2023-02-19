@@ -2,14 +2,13 @@ import os
 import base64
 
 from flask import Flask, request
-from model import Message 
+from model_1 import Message, db
 
 app = Flask(__name__)
 
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-
     if request.method == 'POST':
         m = Message(content=request.form['content'])
         m.save()
@@ -26,7 +25,7 @@ def home():
 
 <h2>Wisdom From Your Fellow Classmates</h2>
 """
-    
+
     for m in Message.select():
         body += """
 <div class="message">
@@ -34,10 +33,14 @@ def home():
 </div>
 """.format(m.content.replace('<', '&lt;').replace('>', '&gt;'))
 
-    return body 
+    return body
 
 
 if __name__ == "__main__":
+
+    db.connect()
+    db.create_tables([Message])
+
     port = int(os.environ.get("PORT", 6738))
     app.run(host='0.0.0.0', port=port)
 

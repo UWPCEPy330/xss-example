@@ -23,7 +23,7 @@ def home():
     <input type="submit" value="Submit">
 </form>
 
-<h2>Wisdom From Your Fellow Classmates</h2>
+<h2>Wisdom From Your Fellow Classmates. Scripts disabled.</h2>
 """
     
     for m in Message.select():
